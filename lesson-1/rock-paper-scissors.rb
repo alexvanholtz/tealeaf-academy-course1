@@ -1,32 +1,48 @@
 # Procedural Rock, Paper, Scissors
 
-def computer_choice
-  ["r", "p", "s"].sample(1).flatten
-end
-
 puts "======================================="
 puts "Play Rock, Paper, Scissors!"
 puts "======================================="
 
-rps = { "r" => "Rock", "p" => "Paper", "s" => "Scissors" }
+RPS = { "r" => "Rock", "p" => "Paper", "s" => "Scissors" }
 
+def display_winning_text(winner)
+  puts winner
+  case winner
+  when "r"
+    puts "Rock breaks scissors!"
+  when "p"
+    puts "Paper wraps rock!"
+  when "s"
+    puts "Scissors cut paper!" 
+  end         
+end
 
-puts "Choose one: [ R / P / S ]"
-user_selection = gets.chomp
-# computer_selection
-computer_selection = computer_choice[0]
+loop do
+ 
+  begin
+    puts "Choose one: [ R / P / S ]"
+    user_selection = gets.chomp.downcase
+    computer_selection = RPS.keys.sample
+  end until RPS.keys.include?(user_selection)
 
-# puts user_selection.class
-# puts rps[computer_selection]
-puts "You picked #{rps[user_selection.downcase]} and the computer picked #{rps[computer_selection]}"
-# # puts rps[user_input.downcase]
+  puts "You picked #{RPS[user_selection]} and the computer picked #{RPS[computer_selection]}."
 
+  if RPS[user_selection] == RPS[computer_selection]
+    puts "It's a tie!"
+  elsif user_selection == "r" && computer_selection == "s" ||
+        user_selection == "s" && computer_selection == "p" ||
+        user_selection == "p" && computer_selection == "r"      
+    display_winning_text user_selection
+    puts "You win!"
+  else
+    display_winning_text computer_selection
+    puts "You lose!"
+  end
 
-# # p rps.sample(1)
+  puts "Press y to play again"
+  break unless gets.chomp.downcase == 'y'
 
+end
 
-# puts computer_choice
-
-# computer_selection = computer_choice
-
-# puts rps[computer_selection.to_s]
+puts "Later gator!"
